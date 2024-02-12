@@ -14,45 +14,63 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.historialcomprascontroller = void 0;
 const database_1 = __importDefault(require("../database")); //acceso a la base de datos
+
 class HistorialComprasController {
     mostrarHistorialCompras(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const respuesta = yield database_1.default.query('SELECT * FROM HistorialCompras WHERE historialID = ?', [id]);
-            if (respuesta.length > 0) {
-                res.json(respuesta[0]);
-                return;
+            try {
+                const respuesta = yield database_1.default.query('SELECT * FROM historialcompras WHERE historialID = $1', [id]);
+                if (respuesta.rows.length > 0) {
+                    res.json(respuesta.rows[0]);
+                } else {
+                    res.status(404).json({ 'mensaje': 'HistorialCompras no encontrado' });
+                }
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
             }
-            res.status(404).json({ 'mensaje': 'HistorialCompras no encontrado' });
         });
     }
+
     listarHistorialComprasUsuario(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const resp = yield database_1.default.query(`SELECT * FROM  HistorialCompras LEFT JOIN Usuarios on HistorialCompras.usuarioID = Usuario.usuarioID WHERE Usuarios.usuarioID = ${id};`);
-            res.json(resp);
-            if (resp.length > 0) {
-                res.json(resp[0]);
-                return;
+            try {
+                const resp = yield database_1.default.query('SELECT * FROM historialcompras LEFT JOIN usuarios ON historialcompras.usuarioID = usuarios.usuarioID WHERE usuarios.usuarioID = $1', [id]);
+                res.json(resp.rows);
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
             }
-            res.status(404).json({ 'mensaje': 'HistorialCompras no encontrado' });
         });
     }
-    //aqui va el crud
+
+    // Aquí va el CRUD
     crearHistorialCompras(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            //console.log(req.body)
-            const resp = yield database_1.default.query("INSERT INTO HistorialCompras set ?", [req.body]);
-            res.json(resp);
-            //res.json(null);
+            try {
+                const resp = yield database_1.default.query("INSERT INTO historialcompras SET ?", [req.body]);
+                res.json(resp);
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
+            }
         });
     }
+
     eliminarHistorialCompras(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const resp = yield database_1.default.query(`DELETE FROM HistorialCompras WHERE historialID = ${id}`);
-            res.json(resp);
+            try {
+                const resp = yield database_1.default.query('DELETE FROM historialcompras WHERE historialID = $1', [id]);
+                res.json(resp);
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
+            }
         });
     }
 }
+
 exports.historialcomprascontroller = new HistorialComprasController();
