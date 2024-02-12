@@ -14,50 +14,79 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.productoController = void 0;
 const database_1 = __importDefault(require("../database")); //acceso a la base de datos
+
 class ProductoController {
     crearProducto(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log(req.body);
-            const resp = yield database_1.default.query("INSERT INTO Productos set ?", [req.body]);
-            console.log(resp);
-            res.json(resp);
-            //res.json(null);
+            try {
+                const resp = yield database_1.default.query("INSERT INTO productos SET ?", [req.body]);
+                console.log(resp);
+                res.json(resp);
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
+            }
         });
     }
+
     mostrarProducto(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const respuesta = yield database_1.default.query('SELECT * FROM Productos WHERE productoID = ?', [id]);
-            if (respuesta.length > 0) {
-                res.json(respuesta[0]);
-                return;
+            try {
+                const respuesta = yield database_1.default.query('SELECT * FROM productos WHERE productoID = $1', [id]);
+                if (respuesta.rows.length > 0) {
+                    res.json(respuesta.rows[0]);
+                } else {
+                    res.status(404).json({ 'mensaje': 'Producto no encontrado' });
+                }
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
             }
-            res.status(404).json({ 'mensaje': 'Producto no encontrado' });
         });
     }
+
     mostrarProductos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("YA ESTAMOS AQUI");
-            const respuesta = yield database_1.default.query('SELECT * FROM Productos');
-            res.json(respuesta);
+            try {
+                const respuesta = yield database_1.default.query('SELECT * FROM productos');
+                res.json(respuesta.rows);
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
+            }
         });
     }
+
     actualizarProducto(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             //console.log(req.params);
             console.log(id);
-            const resp = yield database_1.default.query("UPDATE Productos set ? WHERE productoID = ?", [req.body, id]);
-            res.json(resp);
-            //res.json(null);
+            try {
+                const resp = yield database_1.default.query("UPDATE productos SET ? WHERE productoID = $1", [req.body, id]);
+                res.json(resp);
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
+            }
         });
     }
+
     eliminarProducto(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const resp = yield database_1.default.query(`DELETE FROM Productos WHERE productoID = ${id}`);
-            res.json(resp);
+            try {
+                const resp = yield database_1.default.query('DELETE FROM productos WHERE productoID = $1', [id]);
+                res.json(resp);
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
+            }
         });
     }
 }
+
 exports.productoController = new ProductoController();
