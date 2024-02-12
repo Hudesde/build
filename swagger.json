@@ -1,0 +1,2096 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "REST API FesterSanMartin",
+        "description": "<html><body>Documentacion del proyecto del <b>FesterSanMartin</b></body></html>",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:3000",
+    "basePath": "",
+    "tags": [
+        {
+            "name": "CarritoCompras",
+            "description": "API para obtener información de los carritos de compras"
+        },
+        {
+            "name": "Compras",
+            "description": "API para obtener información las compras"
+        },
+        {
+            "name": "DetalleCarrito",
+            "description": "API para obtener información de los detalles del carrito"
+        },
+        {
+            "name": "DetalleCompra",
+            "description": "API para obtener información de los detalles de una compra"
+        },
+        {
+            "name": "HistorialCompras",
+            "description": "API para obtener el historial de compras"
+        },
+        {
+            "name": "Productos",
+            "description": "API para obtener información los productos"
+        },
+        {
+            "name": "ReportesVentas",
+            "description": "API para obtener reportes de las ventas"
+        },
+        {
+            "name": "SeguimientoPedidos",
+            "description": "API para obtener información del seguimiento de los pedidos"
+        },
+        {
+            "name": "SoporteCliente",
+            "description": "API para obtener información las consultas al soporte del cliente"
+        },
+        {
+            "name": "Usuarios",
+            "description": "API para obtener información las consultas al soporte del cliente"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/api/CarritoCompras/mostrarCarritoCompras/{carritoID}": {
+            "get": {
+                "tags": [
+                    "CarritoCompras"
+                ],
+                "summary": "Muestra un detallecarrito correspondiente a un id de detalle carrito",
+                "description": "<p>Servicio que devuelve la información detallada de un carrito de compras.</p><p>&nbsp;</p><p><em><strong>¿Detalles del ese carrito?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "carritoID": 2,
+                                    "usuarioID": 11,
+                                    "estado": "Abierto"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/CarritoCompras"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/CarritoCompras/crearCarritoCompras": {
+            "post": {
+                "summary": "Creando un carrito de compras",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "CarritoCompras",
+                        "in": "body",
+                        "description": "CarritoCompras agregado",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoCarritoCompras"
+                        }
+                    }
+                ],
+                "tags": ["CarritoCompras"],
+                "responses": {
+                    "200": {
+                        "description": "Insertado con exito"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/CarritoCompras/actualizarCarritoCompras/{carritoID}": {
+            "put": {
+                "summary": "Actualizar la informaciòn del carrito de compras",
+                "description": "<p>Servicio que permite editar la informaciòn de carrito de compras, dado el id del mismo </p><p>&nbsp;</p>",
+                "operationId": "upstring",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "carritoID",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del CarritoCompra",
+                        "type": "number",
+                        "default": "4"
+                    },
+                    {
+                        "name": "CarritoCompras",
+                        "in": "body",
+                        "description": "Nombre del CarritoCompra",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CarritoCompras"
+                        }
+                    }
+                ],
+                "tags": ["CarritoCompras"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/CarritoCompras/eliminarCarritoCompras/{carritoID}": {
+            "delete": {
+                "tags": ["CarritoCompras"],
+                "summary": "Eliminar el carrito de compras de un usuario atravez del ID del carrito",
+                "description": "<p>Servicio que elimina el carrito de compras dado el id de carrito</p><p>&nbsp;</p><p><em><strong>¿Fué una ejecución exitoso?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "carritoID",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del carrito de compras",
+                        "type": "number",
+                        "default": "8"
+                    }
+                ]
+            }
+        },
+        "/api/Compras/mostrarCompra/{compraID}": {
+            "get": {
+                "tags": [
+                    "Compras"
+                ],
+                "summary": "Muestra un detallecarrito correspondiente a un id de detalle carrito",
+                "description": "<p>Servicio que devuelve la información detallada de un carrito de compras.</p><p>&nbsp;</p><p><em><strong>¿Detalles del ese carrito?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "compraID": 2,
+                                    "usuarioID": 11,
+                                    "fecha": "date",
+                                    "total": 10.2
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Compra"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/Compras/crearCompra": {
+            "post": {
+                "summary": "Creando una compra",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Compra",
+                        "in": "body",
+                        "description": "Compra agregado",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevaCompra"
+                        }
+                    }
+                ],
+                "tags": ["Compras"],
+                "responses": {
+                    "200": {
+                        "description": "Insertado con exito"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/Compras/eliminarCompra/{comprasID}": {
+            "delete": {
+                "tags": ["Compras"],
+                "summary": "Eliminar la compra seugn su ID",
+                "description": "<p>Servicio que elimina una compra segun su ID</p><p>&nbsp;</p><p><em><strong>¿Fué una ejecución exitoso?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "compraID",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del carrito de compras",
+                        "type": "number",
+                        "default": "8"
+                    }
+                ]
+            }
+        },
+        "/api/Compras/mostrarComprasFecha/{fecha}": {
+            "get": {
+                "tags": ["Compras"],
+                "summary": "Listado de todos los usuarios que existen en la base de datos.",
+                "description": "<p>Servicio que devuelve la información detallada de todos los usuarios que existen en la base de datos.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los usuarios existentes en la base de datos?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "compraID": 2,
+                                    "usuarioID": 11,
+                                    "fecha": "date",
+                                    "total": 10.2
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Compras"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/Compras/mostrarComprasUserID/{usuarioID}": {
+            "get": {
+                "tags": ["Compras"],
+                "summary": "Listado de todos los usuarios que existen en la base de datos.",
+                "description": "<p>Servicio que devuelve la información detallada de todos los usuarios que existen en la base de datos.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los usuarios existentes en la base de datos?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "compraID": 2,
+                                    "usuarioID": 11,
+                                    "fecha": "date",
+                                    "total": 10.2
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Compras"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/DetalleCarrito/mostrarDetalleCarrito/{detallecarritoID}": {
+            "get": {
+                "tags": ["DetalleCarrito"],
+                "summary": "Muestra un detallecarrito existente en la base de datos.",
+                "description": "<p>Servicio que devuelve la información del detalle carrito en de la base de adtos.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los roles existentes en el ciit?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "detallecarritoID": 1,
+                                    "carritoID": 2,
+                                    "productoID": 3,
+                                    "cantidad": 12
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/DetalleCarrito"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "detallecarritoID",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del detalle del carrito",
+                        "type": "number",
+                        "default": "4"
+                    }
+                ]
+            }
+        },
+        "/api/DetalleCarrito/crearDetalleCarrito": {
+            "post": {
+                "summary": "Creando un DetalleCarrito",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "detallecarritoID",
+                        "in": "body",
+                        "description": "DetalleCarrito agregado",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoDetalleCarrito"
+                        }
+                    }
+                ],
+                "tags": ["DetalleCarrito"],
+                "responses": {
+                    "200": {
+                        "description": "Insertado con exito"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/DetalleCarrito/actualizarDetalleCarrito/{detallecarritoID}": {
+            "put": {
+                "summary": "Actualizar la informaciòn de un DetalleCarrito de la tienda",
+                "description": "<p>Servicio que permite editar la informaciòn de un DetalleCarrito de la tienda, dado el id el mismo </p><p>&nbsp;</p>",
+                "operationId": "upstring",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "detallecarritoID",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del DetalleCarrito",
+                        "type": "number",
+                        "default": "4"
+                    },
+                    {
+                        "name": "DetalleCarrito",
+                        "in": "body",
+                        "description": "Nombre del DetalleCarrito",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoDetalleCarrito"
+                        }
+                    }
+                ],
+                "tags": ["DetalleCarrito"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/DetalleCarrito/eliminarDetalleCarrito/{detallecarritoID}": {
+            "delete": {
+                "tags": ["DetalleCarrito"],
+                "summary": "Eliminar un detallecarrito de la base de adtos dado su identificador",
+                "description": "<p>Servicio que elimina un detallecarrito dado el identificador enviado</p><p>&nbsp;</p><p><em><strong>¿Fué una ejecución exitoso?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "detallecarritoID",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del detalle del carrito",
+                        "type": "number",
+                        "default": "2"
+                    }
+                ]
+            }
+        },
+        "/api/DetalleCompra/mostrarDetalleCompra/{detallecompraID}": {
+            "get": {
+                "tags": ["DetalleCompra"],
+                "summary": "Muestra un detallecompra existente en la base de datos.",
+                "description": "<p>Servicio que devuelve la información del detalle compra en de la base de adtos.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los roles existentes en el ciit?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "detallecompraID": 1,
+                                    "compraID": 2,
+                                    "productoID": 3,
+                                    "cantidad": 12,
+                                    "subtotal": 1021.25
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/DetalleCompra"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "detallecompraID",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del detalle del carrito",
+                        "type": "number",
+                        "default": "4"
+                    }
+                ]
+            }
+        },
+        "/api/DetalleCompra/crearDetalleCompra": {
+            "post": {
+                "summary": "Creando un DetalleCompra",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "detallecompraID",
+                        "in": "body",
+                        "description": "DetalleCompra agregado",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoDetalleCompra"
+                        }
+                    }
+                ],
+                "tags": ["DetalleCompra"],
+                "responses": {
+                    "200": {
+                        "description": "Insertado con exito"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/DetalleCompra/actualizarDetalleCompra/{detallecompraID}": {
+            "put": {
+                "summary": "Actualizar la informaciòn de un DetalleCompra de la tienda",
+                "description": "<p>Servicio que permite editar la informaciòn de un DetalleCompra de la tienda, dado el id el mismo </p><p>&nbsp;</p>",
+                "operationId": "upstring",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "detallecompraID",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del DetalleCompra",
+                        "type": "number",
+                        "default": "4"
+                    },
+                    {
+                        "name": "DetalleCompra",
+                        "in": "body",
+                        "description": "Nombre del DetalleCompra",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoDetalleCompra"
+                        }
+                    }
+                ],
+                "tags": ["DetalleCompra"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/DetalleCompra/elminarDetalleCompra/{detallecompraID}": {
+            "delete": {
+                "tags": ["DetalleCompra"],
+                "summary": "Eliminar un detallecarrito de la base de adtos dado su identificador",
+                "description": "<p>Servicio que elimina un detallecarrito dado el identificador enviado</p><p>&nbsp;</p><p><em><strong>¿Fué una ejecución exitoso?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "detallecompraID",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del detalle del carrito",
+                        "type": "number",
+                        "default": "2"
+                    }
+                ]
+            }
+        },
+        "/api/HistorialCompras/mostrarHistorialCompras/{historialID}": {
+            "get": {
+                "tags": ["HistorialCompras"],
+                "summary": "Muestra un detallecompra existente en la base de datos.",
+                "description": "<p>Servicio que devuelve la información del detalle compra en de la base de adtos.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los roles existentes en el ciit?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "historialID": 1,
+                                    "usuarioID": 2,
+                                    "compraID": 3
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/HistorialCompras"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "historialID",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del detalle del carrito",
+                        "type": "number",
+                        "default": "4"
+                    }
+                ]
+            }
+        },
+        "/api/HistorialCompras/crearHistorialCompras": {
+            "post": {
+                "summary": "Creando un HistorialCompras",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "historialID",
+                        "in": "body",
+                        "description": "DetalleCompra agregado",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoHistorialCompras"
+                        }
+                    }
+                ],
+                "tags": ["HistorialCompras"],
+                "responses": {
+                    "200": {
+                        "description": "Insertado con exito"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/HistorialCompras/eliminarHistorialCompras/{historialID}": {
+            "delete": {
+                "tags": ["HistorialCompras"],
+                "summary": "Eliminar un historialCompra de la base de adtos dado su identificador",
+                "description": "<p>Servicio que elimina un historial compra dado el identificador enviado</p><p>&nbsp;</p><p><em><strong>¿Fué una ejecución exitoso?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "historialID",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del historial de compra",
+                        "type": "number",
+                        "default": "2"
+                    }
+                ]
+            }
+        },
+        "/api/HistorialCompras/listarHistorialComprasUsuario/{usuarioID}": {
+            "get": {
+                "tags": ["HistorialCompras"],
+                "summary": "Listado de todas las compras pertenecientes a un usuario.",
+                "description": "<p>Servicio que devuelve las compras pertenecientes a un usuario que existen en la base de datos.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los usuarios existentes en la base de datos?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "historialID": 1,
+                                    "usuarioID": 2,
+                                    "compraID": 3
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/HistorialesCompras"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/Productos/eliminarProducto/{productoID}": {
+            "delete": {
+                "tags": ["Productos"],
+                "summary": "Eliminar un producto de la base de adtos dado su identificador",
+                "description": "<p>Servicio que elimina un producto dado el identificador enviado</p><p>&nbsp;</p><p><em><strong>¿Fué una ejecución exitoso?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "productoID",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador de la empresa",
+                        "type": "number",
+                        "default": "2"
+                    }
+                ]
+            }
+        },
+        "/api/Productos/mostrarProductos": {
+            "get": {
+                "tags": [
+                    "Productos"
+                ],
+                "summary": "Listado de todos los roles que existen en el ciit.",
+                "description": "<p>Servicio que devuelve la información detallada de todos los roles que existen en el ciit.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los roles existentes en el ciit?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "productoID": 1,
+                                    "nombre": "Administrador",
+                                    "descripcion": 1,
+                                    "precio": 12,
+                                    "color": 1,
+                                    "especificaciones": "Administrador",
+                                    "stock": 14
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Productos"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/Productos/mostrarProducto/{productoID}": {
+            "get": {
+                "tags": ["Productos"],
+                "summary": "Muestra un producto existente en la base de datos.",
+                "description": "<p>Servicio que devuelve la información detallada todos los productos existentes en la base de adtos.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los roles existentes en el ciit?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "productoID": 1,
+                                    "nombre": "FesterMix",
+                                    "descripcion": "DESCRIPCIONDETALLADA",
+                                    "precio": 12,
+                                    "color": "ROJO",
+                                    "especificaciones": "Producto para mix mix mix",
+                                    "stock": 14
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Producto"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "productoID",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del Producto",
+                        "type": "number",
+                        "default": "4"
+                    }
+                ]
+            }
+        },
+        "/api/Productos/crearProducto": {
+            "post": {
+                "tags": ["Productos"],
+                "summary": "Inserta un nuevo rol en el ciit.",
+                "operationId": "create",
+                "description": "<p>Servicio que permite crear un nuevo rol en el ciit.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los datos necesarios para crear un nuevo rol?</strong></em></p>",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Producto",
+                        "in": "body",
+                        "description": "<p>Información del rol q ue se va a crear.</p>",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoProducto"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Producto Insertado con exito"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/Productos/actualizarProducto/{productoID}": {
+            "put": {
+                "summary": "Actualizar la informaciòn de un producto de la tienda",
+                "description": "<p>Servicio que permite editar la informaciòn de un producto de la tienda, dado el id el mismo </p><p>&nbsp;</p>",
+                "operationId": "upstring",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "productoID",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del Producto",
+                        "type": "number",
+                        "default": "4"
+                    },
+                    {
+                        "name": "Producto",
+                        "in": "body",
+                        "description": "Nombre del Producto",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoProducto"
+                        }
+                    }
+                ],
+                "tags": ["Productos"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        }, "/api/ReportesVentas/mostrarReportesVentas/{reporteID}": {
+            "get": {
+                "tags": ["ReportesVentas"],
+                "summary": "Listado de todos los usuarios que existen en la base de datos.",
+                "description": "<p>Servicio que devuelve la información detallada de todos los usuarios que existen en la base de datos.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los usuarios existentes en la base de datos?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "reporteID": 4,
+                                    "fecha": "date",
+                                    "totalVentas": 10.2
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ReporteVentas"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/ReportesVentas/listarReportesVentasFecha/{fecha}": {
+            "get": {
+                "tags": ["ReportesVentas"],
+                "summary": "Informacion asociada al usuario, si es que existe en la base de datos de FSM",
+                "description": "<p>Servicio que devuelve la información detallada del usuario soliciado</p><p>&nbsp;</p><p><em><strong>¿Cuál es del usuario de este id?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "reporteID": 4,
+                                    "fecha": "date",
+                                    "totalVentas": 10.2
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/ReporteVentas"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "fecha",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del usuario",
+                        "type": "date",
+                        "default": "0"
+                    }
+                ]
+            }
+        },
+        "/api/ReportesVentas/crearReportesVentas": {
+            "post": {
+                "summary": "Creando un reporte de ventas",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "ReporteVentas",
+                        "in": "body",
+                        "description": "Usuario agregado",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoReporteVentas"
+                        }
+                    }
+                ],
+                "tags": ["ReportesVentas"],
+                "responses": {
+                    "200": {
+                        "description": "Insertado con exito"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/ReportesVentas/actualizarReportesVentas/{reporteID}": {
+            "put": {
+                "summary": "Actualizar la informaciòn del reporte de venta",
+                "description": "<p>Servicio que permite editar la informaciòn del usuario de ciit, dado el id el mismo </p><p>&nbsp;</p>",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "reporteID",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del usuario",
+                        "type": "number",
+                        "default": "4"
+                    },
+                    {
+                        "name": "ReporteVentas",
+                        "in": "body",
+                        "description": "Nombre del usuario",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoReporteVentas"
+                        }
+                    }
+                ],
+                "tags": ["ReportesVentas"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/ReportesVentas/eliminarReportesVentas/{reporteID}": {
+            "delete": {
+                "summary": "Eliminar a un reporte de venta",
+                "description": "<p>Servicio que elimina a un reporte de venta del sistema  </p><p>&nbsp;</p><p><em><strong>¿Cuál es ese usuario?</strong></em></p>",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "reporteID",
+                        "in": "path",
+                        "description": "Ingrese el id del usuario a eliminar",
+                        "required": true,
+                        "default": 1
+                    }
+                ],
+                "tags": [
+                    "ReportesVentas"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "servicio OK"
+                    }
+                }
+            }
+        }, "/api/SeguimientoPedidos/mostrarSeguimientoPedidos/{seguimientoID}": {
+            "get": {
+                "tags": ["SeguimientoPedidos"],
+                "summary": "Listado de todos los usuarios que existen en la base de datos.",
+                "description": "<p>Servicio que devuelve la información detallada de todos los usuarios que existen en la base de datos.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los usuarios existentes en la base de datos?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "seguimientoID": 4,
+                                    "usuarioID": 2,
+                                    "compraID": 2,
+                                    "estado": "En ruta"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/SeguimientosPedidos"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/SeguimientoPedidos/listarSeguimientoPedidosUsuario/{usuarioID}": {
+            "get": {
+                "tags": ["SeguimientoPedidos"],
+                "summary": "Informacion del seguimiento de los pedidos de un usuario",
+                "description": "<p>Servicio que devuelve la información detallada seguimiento de los pedidos de los pedidos de los usuarios</p><p>&nbsp;</p><p><em><strong>¿Cuál es del usuario de este id?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "seguimientoID": 4,
+                                    "usuarioID": 2,
+                                    "compraID": 2,
+                                    "estado": "En ruta"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/SeguimientoPedidos"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "seguimientoID",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del usuario",
+                        "type": "number",
+                        "default": "0"
+                    }
+                ]
+            }
+        },
+        "/api/SeguimientoPedidos/crearSeguimientoPedidos": {
+            "post": {
+                "summary": "Creando un seguimiento pedidos",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "SeguimientoPedidos",
+                        "in": "body",
+                        "description": "Usuario agregado",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoSeguimientoPedidos"
+                        }
+                    }
+                ],
+                "tags": ["SeguimientoPedidos"],
+                "responses": {
+                    "200": {
+                        "description": "Insertado con exito"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/SeguimientoPedidos/actualizarSeguimientoPedidos/{seguimientoID}": {
+            "put": {
+                "summary": "Actualizar la informaciòn del usuario del ciit",
+                "description": "<p>Servicio que permite editar la informaciòn del usuario de ciit, dado el id el mismo </p><p>&nbsp;</p>",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "seguimientoID",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del usuario",
+                        "type": "number",
+                        "default": "4"
+                    },
+                    {
+                        "name": "SeguimientoPedidos",
+                        "in": "body",
+                        "description": "Nombre del usuario",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoSeguimientoPedidos"
+                        }
+                    }
+                ],
+                "tags": ["SeguimientoPedidos"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/SeguimientoPedidos/eliminarSeguimientoPedidos/{seguimientoID}": {
+            "delete": {
+                "summary": "Eliminar a un usuario",
+                "description": "<p>Servicio que elimina a un usuario del sistema  </p><p>&nbsp;</p><p><em><strong>¿Cuál es ese usuario?</strong></em></p>",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "seguimientoID",
+                        "in": "path",
+                        "description": "Ingrese el id del usuario a eliminar",
+                        "required": true,
+                        "default": 1
+                    }
+                ],
+                "tags": [
+                    "SeguimientoPedidos"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "servicio OK"
+                    }
+                }
+            }
+        },
+        "/api/SoporteCliente/mostrarConsulta/{consultaID}": {
+            "get": {
+                "tags": ["SoporteCliente"],
+                "summary": "Informacion asociada al usuario, si es que existe en la base de datos de FSM",
+                "description": "<p>Servicio que devuelve la información detallada del usuario soliciado</p><p>&nbsp;</p><p><em><strong>¿Cuál es del usuario de este id?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "consultaID": 4,
+                                    "usuarioID": 10,
+                                    "fecha": "Angel@gmail.com",
+                                    "consulta": "9512003242"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/SoporteClientes"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "consultaID",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del usuario",
+                        "type": "number",
+                        "default": "0"
+                    }
+                ]
+            }
+        },
+        "/api/SoporteCliente/listarSoporteClientesUsuario/{usuarioID}": {
+            "get": {
+                "tags": ["SoporteCliente"],
+                "summary": "Informacion del seguimiento de los pedidos de un usuario",
+                "description": "<p>Servicio que devuelve la información detallada seguimiento de los pedidos de los pedidos de los usuarios</p><p>&nbsp;</p><p><em><strong>¿Cuál es del usuario de este id?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "consultaID": 4,
+                                    "usuarioID": 10,
+                                    "fecha": "Angel@gmail.com",
+                                    "consulta": "9512003242"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/SoporteClientes"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "consultaID",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del usuario",
+                        "type": "number",
+                        "default": "0"
+                    }
+                ]
+            }
+        },
+        "/api/SoporteCliente/crearSoporteCliente": {
+            "post": {
+                "summary": "Creando un usuario",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "SoporteCliente",
+                        "in": "body",
+                        "description": "SoporteCliente agregado",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoSoporteCliente"
+                        }
+                    }
+                ],
+                "tags": ["SoporteCliente"],
+                "responses": {
+                    "200": {
+                        "description": "Insertado con exito"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/SoporteCliente/actualizarSoporteCliente/{consultaID}": {
+            "put": {
+                "summary": "Actualizar la informaciòn del soporte a cliente del FS",
+                "description": "<p>Servicio que permite editar la informaciòn del usuario de ciit, dado el id el mismo </p><p>&nbsp;</p>",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "consultaID",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del usuario",
+                        "type": "number",
+                        "default": "4"
+                    },
+                    {
+                        "name": "SoporteCliente",
+                        "in": "body",
+                        "description": "Nombre del usuario",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoSoporteCliente"
+                        }
+                    }
+                ],
+                "tags": ["SoporteCliente"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/SoporteCliente/eliminarSoporteCliente/{consultaID}": {
+            "delete": {
+                "summary": "Eliminar una consulta de soporte al cliente",
+                "description": "<p>Servicio que elimina una consulta </p><p>&nbsp;</p><p><em><strong>¿Cuál es ese usuario?</strong></em></p>",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "consultaID",
+                        "in": "path",
+                        "description": "Ingrese el id del usuario a eliminar",
+                        "required": true,
+                        "default": 1
+                    }
+                ],
+                "tags": [
+                    "SoporteCliente"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "servicio OK"
+                    }
+                }
+            }
+        },
+        "/api/Usuarios/mostrarTodosUsuarios": {
+            "get": {
+                "tags": ["Usuarios"],
+                "summary": "Listado de todos los usuarios que existen en la base de datos.",
+                "description": "<p>Servicio que devuelve la información detallada de todos los usuarios que existen en la base de datos.</p><p>&nbsp;</p><p><em><strong>¿Cuáles son los usuarios existentes en la base de datos?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "usuarioID": 4,
+                                    "nombre": "Angel Cruz",
+                                    "correo": "Angel@gmail.com",
+                                    "telefono": 9512003242,
+                                    "contraseniaUsuario": "789a2w",
+                                    "rolID": 1
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Usuarios"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/Usuarios/mostrarUsuario/{usuarioID}": {
+            "get": {
+                "tags": ["Usuarios"],
+                "summary": "Informacion asociada al usuario, si es que existe en la base de datos de FSM",
+                "description": "<p>Servicio que devuelve la información detallada del usuario soliciado</p><p>&nbsp;</p><p><em><strong>¿Cuál es del usuario de este id?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "usuarioID": 4,
+                                    "nombre": "Angel Cruz",
+                                    "correo": "Angel@gmail.com",
+                                    "telefono": 9512003242,
+                                    "contraseniaUsuario": "789a2w",
+                                    "rolID": 1
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Usuario"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "usuarioID",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del usuario",
+                        "type": "number",
+                        "default": "0"
+                    }
+                ]
+            }
+        },
+        "/api/Usuarios/mostrarUsuarioCorreo/{correo}": {
+            "get": {
+                "tags": ["Usuarios"],
+                "summary": "Informacion asociada al usuario, si es que existe en la base de datos de FSM",
+                "description": "<p>Servicio que devuelve la información detallada del usuario soliciado</p><p>&nbsp;</p><p><em><strong>¿Cuál es del usuario de este id?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "usuarioID": 4,
+                                    "nombre": "Angel Cruz",
+                                    "correo": "Angel@gmail.com",
+                                    "telefono": 9512003242,
+                                    "contraseniaUsuario": "789a2w",
+                                    "rolID": 1
+                                },
+                                {
+                                    "usuarioID": 14,
+                                    "nombre": "Angel Nopal Cruz",
+                                    "correo": "AngelitoN0pal@gmail.com",
+                                    "telefono": 9512203242,
+                                    "contraseniaUsuario": "78912w",
+                                    "rolID": 0
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Usuario"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [{
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "Bearer eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }]
+            }
+        },
+        "/api/Usuarios/crearUsuario": {
+            "post": {
+                "summary": "Creando un usuario",
+                "operationId": "create",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "Usuario",
+                        "in": "body",
+                        "description": "Usuario agregado",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoUsuario"
+                        }
+                    }
+                ],
+                "tags": ["Usuarios"],
+                "responses": {
+                    "200": {
+                        "description": "Insertado con exito"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/Usuarios/actualizarUsuario/{usuarioID}": {
+            "put": {
+                "summary": "Actualizar la informaciòn del usuario del ciit",
+                "description": "<p>Servicio que permite editar la informaciòn del usuario de ciit, dado el id el mismo </p><p>&nbsp;</p>",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "usuarioID",
+                        "in": "path",
+                        "required": true,
+                        "description": "identificador del usuario",
+                        "type": "number",
+                        "default": "4"
+                    },
+                    {
+                        "name": "Usuario",
+                        "in": "body",
+                        "description": "Nombre del usuario",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NuevoUsuario"
+                        }
+                    }
+                ],
+                "tags": ["Usuarios"],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                }
+            }
+        },
+        "/api/Usuarios/eliminarUsuario/{usuarioID}": {
+            "delete": {
+                "summary": "Eliminar a un usuario",
+                "description": "<p>Servicio que elimina a un usuario del sistema  </p><p>&nbsp;</p><p><em><strong>¿Cuál es ese usuario?</strong></em></p>",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "usuarioID",
+                        "in": "path",
+                        "description": "Ingrese el id del usuario a eliminar",
+                        "required": true,
+                        "default": 1
+                    }
+                ],
+                "tags": [
+                    "Usuarios"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "servicio OK"
+                    }
+                }
+            }
+        },
+        "/api/Comprador/existe/{correo}": {
+            "get": {
+                "tags": ["Comprador"],
+                "summary": "Informacion asociada al usuario, si es que existe en la base de datos de FSM",
+                "description": "<p>Servicio que devuelve la información detallada del usuario soliciado</p><p>&nbsp;</p><p><em><strong>¿Cuál es del usuario de este id?</strong></em></p>",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "examples": {
+                            "application/json": [
+                                {
+                                    "correo": "Angel@gmail.com",
+                                    "contraseniaUsuario": "789a2w"
+                                }
+                            ]
+                        },
+                        "schema": {
+                            "$ref": "#/definitions/Comprador"
+                        }
+                    },
+                    "403": {
+                        "description": "Prohibido"
+                    }
+                },
+                "parameters": [{
+                        "description": "apiKey",
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "default": "Bearer eyJhbGciOiJIUzI1NiJ9.ZXJpa3VlQGdtYWlsLmNvbQ.v7atXtnZ9F14ahwqCSjYKQirsvjs5aWQ4MrPz-BCBSk"
+                    }]
+            }
+        }
+    },
+    "definitions": {
+        "Comprador": {
+            "type": "object",
+            "properties": {
+                "correo": {
+                    "type": "string",
+                    "description": "Correo del usuario"
+                },
+                "contraseniaUsuario": {
+                    "type": "string",
+                    "description": "Contrasena del usuario"
+                }
+            }
+        },
+        "Compradores": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Comprador"
+            }
+        },
+        "NuevoComprador": {
+            "type": "object",
+            "properties": {
+                "correo": {
+                    "type": "string",
+                    "description": "Correo del usuario"
+                },
+                "contraseniaUsuario": {
+                    "type": "string",
+                    "description": "Contrasena del usuario"
+                }
+            }
+        },
+        "Usuario": {
+            "type": "object",
+            "properties": {
+                "usuarioID": {
+                    "type": "number",
+                    "description": "Codigo que permite identificar al usuario"
+                },
+                "nombre": {
+                    "type": "string",
+                    "description": "Nombre del usuario"
+                },
+                "correo": {
+                    "type": "string",
+                    "description": "Correo del usuario"
+                },
+                "telefono": {
+                    "type": "number",
+                    "description": "telefono del usuario"
+                },
+                "contraseniaUsuario": {
+                    "type": "string",
+                    "description": "Contrasena del usuario"
+                },
+                "rolID": {
+                    "type": "number",
+                    "description": "Rol del usuario"
+                }
+            }
+        },
+        "Usuarios": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Usuario"
+            }
+        },
+        "NuevoUsuario": {
+            "type": "object",
+            "properties": {
+                "nombre": {
+                    "type": "string",
+                    "description": "Nombre del usuario"
+                },
+                "correo": {
+                    "type": "string",
+                    "description": "Correo del usuario"
+                },
+                "telefono": {
+                    "type": "number",
+                    "description": "telefono del usuario"
+                },
+                "contraseniaUsuario": {
+                    "type": "string",
+                    "description": "Contrasena del usuario"
+                },
+                "rolID": {
+                    "type": "number",
+                    "description": "Rol del usuario"
+                }
+            }
+        },
+        "NuevoProducto": {
+            "type": "object",
+            "properties": {
+                "nombre": {
+                    "type": "string",
+                    "description": "Nombre del producto"
+                },
+                "descripcion": {
+                    "type": "string",
+                    "description": "descripcion del producto"
+                },
+                "precio": {
+                    "type": "number",
+                    "description": "precio del producto"
+                },
+                "color": {
+                    "type": "string",
+                    "description": "color del producto"
+                },
+                "especificaciones": {
+                    "type": "string",
+                    "description": "Esto muestra las especificaciones de cada producto"
+                },
+                "stock": {
+                    "type": "number",
+                    "description": "Aqui se muestra el numero de productos disponibles"
+                }
+            }
+        },
+        "Producto": {
+            "type": "object",
+            "properties": {
+                "productoID": {
+                    "type": "number",
+                    "description": "ID de Producto"
+                },
+                "nombre": {
+                    "type": "string",
+                    "description": "Nombre del producto"
+                },
+                "descripcion": {
+                    "type": "string",
+                    "description": "descripcion del producto"
+                },
+                "precio": {
+                    "type": "number",
+                    "description": "precio del producto"
+                },
+                "color": {
+                    "type": "string",
+                    "description": "color del producto"
+                },
+                "especificaciones": {
+                    "type": "string",
+                    "description": "Esto muestra las especificaciones de cada producto"
+                },
+                "stock": {
+                    "type": "number",
+                    "description": "Aqui se muestra el numero de productos disponibles"
+                }
+            }
+        },
+        "Productos": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Producto"
+            }
+        },
+        "CarritoCompras": {
+            "type": "object",
+            "properties": {
+                "carritoID": {
+                    "type": "number",
+                    "description": "Codigo que permite identificar al rol"
+                },
+                "usuarioID": {
+                    "type": "number",
+                    "description": "Nombre del usuario duenio del carrito"
+                },
+                "estado": {
+                    "type": "string",
+                    "description": "Estado del carrito"
+                }
+            }
+        },
+        "CarritosCompras": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/CarritoCompras"
+            }
+        },
+        "NuevoCarritoCompras": {
+            "type": "object",
+            "properties": {
+                "usuarioID": {
+                    "type": "number",
+                    "description": "Nombre del usuario duenio del carrito"
+                },
+                "estado": {
+                    "type": "string",
+                    "description": "Estado del carrito"
+                }
+            }
+        },
+        "Compra": {
+            "type": "object",
+            "properties": {
+                "compraID": {
+                    "type": "number",
+                    "description": "ID de la compra"
+                },
+                "usuarioID": {
+                    "type": "number",
+                    "description": "ID del usuario que realiza la compra"
+                },
+                "fecha": {
+                    "type": "string",
+                    "description": "Fecha en que se realiza la compra"
+                },
+                "total": {
+                    "type": "number",
+                    "description": "ID del usuario que realiza la compra"
+                }
+            }
+        },
+        "Compras": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/Compra"
+            }
+        },
+        "NuevaCompra": {
+            "type": "object",
+            "properties": {
+                "usuarioID": {
+                    "type": "number",
+                    "description": "ID del usuario que realiza la compra"
+                },
+                "fecha": {
+                    "type": "string",
+                    "description": "Fecha en que se realiza la compra"
+                },
+                "total": {
+                    "type": "number",
+                    "description": "ID del usuario que realiza la compra"
+                }
+            }
+        },
+        "DetalleCarrito": {
+            "type": "object",
+            "properties": {
+                "detallecarritoID": {
+                    "type": "number",
+                    "description": "Codigo que permite identificar al rol"
+                },
+                "carritoID": {
+                    "type": "number",
+                    "description": "Nombre del rol"
+                },
+                "productoID": {
+                    "type": "number",
+                    "description": "Nombre del rol"
+                },
+                "cantidad": {
+                    "type": "number",
+                    "description": "Nombre del rol"
+                }
+            }
+        },
+        "DetallesCarrito": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/DetalleCarrito"
+            }
+        },
+        "NuevoDetalleCarrito": {
+            "type": "object",
+            "properties": {
+                "carritoID": {
+                    "type": "number",
+                    "description": "Nombre del rol"
+                },
+                "productoID": {
+                    "type": "number",
+                    "description": "Nombre del rol"
+                },
+                "cantidad": {
+                    "type": "number",
+                    "description": "Nombre del rol"
+                }
+            }
+        },
+        "DetalleCompra": {
+            "type": "object",
+            "properties": {
+                "detallecompraID": {
+                    "type": "number",
+                    "description": "Identificador del detalle de la compra"
+                },
+                "compraID": {
+                    "type": "number",
+                    "description": "ID de la compra"
+                },
+                "productoID": {
+                    "type": "number",
+                    "description": "ID del producto a comprar"
+                },
+                "cantidad": {
+                    "type": "number",
+                    "description": "Cantidad de productos a comprar"
+                },
+                "subtotal": {
+                    "type": "number",
+                    "description": "Costo total de la compra"
+                }
+            }
+        },
+        "DetallesCompras": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/DetalleCompras"
+            }
+        },
+        "NuevoDetalleCompra": {
+            "type": "object",
+            "properties": {
+                "compraID": {
+                    "type": "number",
+                    "description": "ID de la compra"
+                },
+                "productoID": {
+                    "type": "number",
+                    "description": "ID del producto a comprar"
+                },
+                "cantidad": {
+                    "type": "number",
+                    "description": "Cantidad de productos a comprar"
+                },
+                "subtotal": {
+                    "type": "number",
+                    "description": "Costo total de la compra"
+                }
+            }
+        },
+        "HistorialCompras": {
+            "type": "object",
+            "properties": {
+                "historialID": {
+                    "type": "number",
+                    "description": "Identificador del historial"
+                },
+                "usuarioID": {
+                    "type": "number",
+                    "description": "Identificador del usuario "
+                },
+                "compraID": {
+                    "type": "number",
+                    "description": "ID de la compra"
+                }
+            }
+        },
+        "HistorialesCompras": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/HistorialCompras"
+            }
+        },
+        "NuevoHistorialCompras": {
+            "type": "object",
+            "properties": {
+                "usuarioID": {
+                    "type": "number",
+                    "description": "Identificador del usuario "
+                },
+                "compraID": {
+                    "type": "number",
+                    "description": "ID de la compra"
+                }
+            }
+        },
+        "ReporteVentas": {
+            "type": "object",
+            "properties": {
+                "reporteID": {
+                    "type": "number",
+                    "description": "Identificador del reporte"
+                },
+                "fecha": {
+                    "type": "string",
+                    "description": "Fecha de generacion del reporte"
+                },
+                "totalVentas": {
+                    "type": "number",
+                    "description": "Total de ventas de este reporte"
+                }
+            }
+        },
+        "ReportesVentas": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/ReporteVentas"
+            }
+        },
+        "NuevoReporteVentas": {
+            "type": "object",
+            "properties": {
+                "fecha": {
+                    "type": "string",
+                    "description": "Fecha de generacion del reporte"
+                },
+                "totalVentas": {
+                    "type": "number",
+                    "description": "Total de ventas de este reporte"
+                }
+            }
+        },
+        "SeguimientoPedidos": {
+            "type": "object",
+            "properties": {
+                "seguimientoID": {
+                    "type": "number",
+                    "description": "Identificador de la consulta"
+                },
+                "usuarioID": {
+                    "type": "number",
+                    "description": "Identificador del usuario "
+                },
+                "compraID": {
+                    "type": "number",
+                    "description": "Identificador del detalle de la compra"
+                },
+                "estado": {
+                    "type": "string",
+                    "description": "Estado del pedido "
+                }
+            }
+        },
+        "SeguimientosPedido": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/SeguimientoPedidos"
+            }
+        },
+        "NuevoSeguimientosPedidos": {
+            "type": "object",
+            "properties": {
+                "usuarioID": {
+                    "type": "number",
+                    "description": "Identificador del usuario "
+                },
+                "compraID": {
+                    "type": "number",
+                    "description": "Identificador del detalle de la compra"
+                },
+                "estado": {
+                    "type": "string",
+                    "description": "Estado del pedido "
+                }
+            }
+        },
+        "SoporteCliente": {
+            "type": "object",
+            "properties": {
+                "consultaID": {
+                    "type": "number",
+                    "description": "Identificador de la consulta"
+                },
+                "usuarioID": {
+                    "type": "number",
+                    "description": "identificador del usuario"
+                },
+                "fecha": {
+                    "type": "string",
+                    "description": "identificador del usuario"
+                },
+                "consulta": {
+                    "type": "string",
+                    "description": "identificador del usuario"
+                }
+            }
+        },
+        "SoportesCliente": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/SoporteClientes"
+            }
+        },
+        "NuevoSoporteClientes": {
+            "type": "object",
+            "properties": {
+                "usuarioID": {
+                    "type": "number",
+                    "description": "identificador del usuario"
+                },
+                "fecha": {
+                    "type": "string",
+                    "description": "identificador del usuario"
+                },
+                "consulta": {
+                    "type": "string",
+                    "description": "identificador del usuario"
+                }
+            }
+        }
+    }
+}
