@@ -14,43 +14,63 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.detallecarritocontroller = void 0;
 const database_1 = __importDefault(require("../database")); //acceso a la base de datos
+
 class DetalleCarritoController {
     mostrarDetalleCarritoUsuario(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const respuesta = yield database_1.default.query('SELECT * FROM DetalleCarrito WHERE detallecarritoID = ?', [id]);
-            if (respuesta.length > 0) {
-                res.json(respuesta[0]);
-                return;
+            try {
+                const respuesta = yield database_1.default.query('SELECT * FROM detallecarrito WHERE detallecarritoID = $1', [id]);
+                if (respuesta.rows.length > 0) {
+                    res.json(respuesta.rows[0]);
+                } else {
+                    res.status(404).json({ 'mensaje': 'DetalleCarrito no encontrado' });
+                }
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
             }
-            res.status(404).json({ 'mensaje': 'DetalleCarrito no encontrado' });
         });
     }
-    //aqui va el crud
+
+    // Aquí va el CRUD
     crearDetalleCarrito(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            //console.log(req.body)
-            const resp = yield database_1.default.query("INSERT INTO DetalleCarrito set ?", [req.body]);
-            res.json(resp);
-            //res.json(null);
+            try {
+                const resp = yield database_1.default.query("INSERT INTO detallecarrito SET ?", [req.body]);
+                res.json(resp);
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
+            }
         });
     }
+
     actualizarDetalleCarrito(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            //console.log(req.params);
-            console.log(id);
-            const resp = yield database_1.default.query("UPDATE DetalleCarrito set ? WHERE detallecarritoID = ?", [req.body, id]);
-            res.json(resp);
-            //res.json(null);
+            try {
+                const resp = yield database_1.default.query("UPDATE detallecarrito SET ? WHERE detallecarritoID = $1", [req.body, id]);
+                res.json(resp);
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
+            }
         });
     }
+
     eliminarDetalleCarrito(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const resp = yield database_1.default.query(`DELETE FROM DetalleCarrito WHERE detallecarritoID = ${id}`);
-            res.json(resp);
+            try {
+                const resp = yield database_1.default.query(`DELETE FROM detallecarrito WHERE detallecarritoID = $1`, [id]);
+                res.json(resp);
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
+            }
         });
     }
 }
+
 exports.detallecarritocontroller = new DetalleCarritoController();
