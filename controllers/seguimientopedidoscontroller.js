@@ -14,55 +14,80 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.seguimientopedidoscontroller = void 0;
 const database_1 = __importDefault(require("../database")); //acceso a la base de datos
+
 class SeguimientoPedidosController {
     mostrarSeguimientoPedidos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const respuesta = yield database_1.default.query('SELECT * FROM SeguimientoPedidos WHERE reporteID = ?', [id]);
-            if (respuesta.length > 0) {
-                res.json(respuesta[0]);
-                return;
+            try {
+                const respuesta = yield database_1.default.query('SELECT * FROM SeguimientoPedidos WHERE seguimientoID = $1', [id]);
+                if (respuesta.rows.length > 0) {
+                    res.json(respuesta.rows[0]);
+                } else {
+                    res.status(404).json({ 'mensaje': 'SeguimientoPedidos no encontrado' });
+                }
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
             }
-            res.status(404).json({ 'mensaje': 'SeguimientoPedidos no encontrado' });
         });
     }
+
     listarSeguimientoPedidosUsuario(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const resp = yield database_1.default.query('SELECT * FROM SeguimientoPedidos WHERE usuarioID = ?', [id]);
-            res.json(resp);
-            if (resp.length > 0) {
-                res.json(resp[0]);
-                return;
+            try {
+                const resp = yield database_1.default.query('SELECT * FROM SeguimientoPedidos WHERE usuarioID = $1', [id]);
+                res.json(resp.rows);
+                if (resp.rows.length > 0) {
+                    res.json(resp.rows[0]);
+                } else {
+                    res.status(404).json({ 'mensaje': 'SeguimientoPedidos no encontrado' });
+                }
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
             }
-            res.status(404).json({ 'mensaje': 'SeguimientoPedidos no encontrado' });
         });
     }
-    //aqui va el crud
+
     crearSeguimientoPedidos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            //console.log(req.body)
-            const resp = yield database_1.default.query("INSERT INTO SeguimientoPedidos set ?", [req.body]);
-            res.json(resp);
-            //res.json(null);
+            try {
+                const resp = yield database_1.default.query("INSERT INTO SeguimientoPedidos SET ?", [req.body]);
+                res.json(resp);
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
+            }
         });
     }
+
     actualizarSeguimientoPedidos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            //console.log(req.params);
-            console.log(id);
-            const resp = yield database_1.default.query("UPDATE SeguimientoPedidos set ? WHERE seguimientoID = ?", [req.body, id]);
-            res.json(resp);
-            //res.json(null);
+            try {
+                const resp = yield database_1.default.query("UPDATE SeguimientoPedidos SET ? WHERE seguimientoID = $1", [req.body, id]);
+                res.json(resp);
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
+            }
         });
     }
+
     eliminarSeguimientoID(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const resp = yield database_1.default.query(`DELETE FROM SeguimientoPedidos WHERE seguimientoID = ${id}`);
-            res.json(resp);
+            try {
+                const resp = yield database_1.default.query('DELETE FROM SeguimientoPedidos WHERE seguimientoID = $1', [id]);
+                res.json(resp);
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
+            }
         });
     }
 }
+
 exports.seguimientopedidoscontroller = new SeguimientoPedidosController();
