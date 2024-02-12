@@ -14,43 +14,64 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.carritocomprascontroller = void 0;
 const database_1 = __importDefault(require("../database")); //acceso a la base de datos
+
 class CarritoCompraController {
     mostrarCarritoCompras(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const respuesta = yield database_1.default.query('SELECT * FROM CarritoCompras WHERE usuarioID = ?', [id]);
-            if (respuesta.length > 0) {
-                res.json(respuesta[0]);
-                return;
+            try {
+                const respuesta = yield database_1.default.query('SELECT * FROM carritocompras WHERE usuarioID = $1', [id]);
+                if (respuesta.length > 0) {
+                    res.json(respuesta[0]);
+                } else {
+                    res.status(404).json({ 'mensaje': 'Carrito no encontrado' });
+                }
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
             }
-            res.status(404).json({ 'mensaje': 'Carrito no encontrado' });
         });
     }
-    //aqui va el crud
+
+    // aquí va el CRUD
+
     crearCarritoCompras(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            //console.log(req.body)
-            const resp = yield database_1.default.query("INSERT INTO CarritoCompras set ?", [req.body]);
-            res.json(resp);
-            //res.json(null);
+            try {
+                const resp = yield database_1.default.query("INSERT INTO carritocompras SET ?", [req.body]);
+                res.json(resp);
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
+            }
         });
     }
+
     actualizarCarritoCompras(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            //console.log(req.params);
-            console.log(id);
-            const resp = yield database_1.default.query("UPDATE CarritoCompras set ? WHERE usuarioID = ?", [req.body, id]);
-            res.json(resp);
-            //res.json(null);
+            try {
+                const resp = yield database_1.default.query("UPDATE carritocompras SET ? WHERE usuarioID = ?", [req.body, id]);
+                res.json(resp);
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
+            }
         });
     }
+
     eliminarCarritoCompras(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const resp = yield database_1.default.query(`DELETE FROM CarritoCompras WHERE usuarioID = ${id}`);
-            res.json(resp);
+            try {
+                const resp = yield database_1.default.query(`DELETE FROM carritocompras WHERE usuarioID = $1`, [id]);
+                res.json(resp);
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
+            }
         });
     }
 }
+
 exports.carritocomprascontroller = new CarritoCompraController();
