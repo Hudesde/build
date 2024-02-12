@@ -14,43 +14,63 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.detallecompracontroller = void 0;
 const database_1 = __importDefault(require("../database")); //acceso a la base de datos
+
 class DetalleCompraController {
     mostrarDetalleCompra(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const respuesta = yield database_1.default.query('SELECT * FROM DetalleCompra WHERE detallecompraID = ?', [id]);
-            if (respuesta.length > 0) {
-                res.json(respuesta[0]);
-                return;
+            try {
+                const respuesta = yield database_1.default.query('SELECT * FROM detallecompra WHERE detallecompraID = $1', [id]);
+                if (respuesta.rows.length > 0) {
+                    res.json(respuesta.rows[0]);
+                } else {
+                    res.status(404).json({ 'mensaje': 'DetalleCompra no encontrado' });
+                }
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
             }
-            res.status(404).json({ 'mensaje': 'DetalleCompra no encontrado' });
         });
     }
-    //aqui va el crud
+
+    // Aquí va el CRUD
     crearDetalleCompra(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            //console.log(req.body)
-            const resp = yield database_1.default.query("INSERT INTO DetalleCompra set ?", [req.body]);
-            res.json(resp);
-            //res.json(null);
+            try {
+                const resp = yield database_1.default.query("INSERT INTO detallecompra SET ?", [req.body]);
+                res.json(resp);
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
+            }
         });
     }
+
     actualizarDetalleCompra(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            //console.log(req.params);
-            console.log(id);
-            const resp = yield database_1.default.query("UPDATE DetalleCompra set ? WHERE detallecompraID = ?", [req.body, id]);
-            res.json(resp);
-            //res.json(null);
+            try {
+                const resp = yield database_1.default.query("UPDATE detallecompra SET ? WHERE detallecompraID = $1", [req.body, id]);
+                res.json(resp);
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
+            }
         });
     }
+
     eliminarDetalleCompra(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const resp = yield database_1.default.query(`DELETE FROM DetalleCompra WHERE detallecompraID = ${id}`);
-            res.json(resp);
+            try {
+                const resp = yield database_1.default.query(`DELETE FROM detallecompra WHERE detallecompraID = $1`, [id]);
+                res.json(resp);
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
+            }
         });
     }
 }
+
 exports.detallecompracontroller = new DetalleCompraController();
