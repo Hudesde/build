@@ -14,55 +14,80 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.soporteclientecontroller = void 0;
 const database_1 = __importDefault(require("../database")); //acceso a la base de datos
+
 class SoporteClienteController {
     mostrarConsulta(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const respuesta = yield database_1.default.query('SELECT * FROM SoporteCliente WHERE consultaID = ?', [id]);
-            if (respuesta.length > 0) {
-                res.json(respuesta[0]);
-                return;
+            try {
+                const respuesta = yield database_1.default.query('SELECT * FROM SoporteCliente WHERE consultaID = $1', [id]);
+                if (respuesta.rows.length > 0) {
+                    res.json(respuesta.rows[0]);
+                } else {
+                    res.status(404).json({ 'mensaje': 'SoporteCliente no encontrado' });
+                }
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
             }
-            res.status(404).json({ 'mensaje': 'SeguimientoPedidos no encontrado' });
         });
     }
+
     listarSoporteClienteUsuario(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const resp = yield database_1.default.query('SELECT * FROM SoporteCliente WHERE consultaID = ?', [id]);
-            res.json(resp);
-            if (resp.length > 0) {
-                res.json(resp[0]);
-                return;
+            try {
+                const resp = yield database_1.default.query('SELECT * FROM SoporteCliente WHERE usuarioID = $1', [id]);
+                res.json(resp.rows);
+                if (resp.rows.length > 0) {
+                    res.json(resp.rows[0]);
+                } else {
+                    res.status(404).json({ 'mensaje': 'SoporteCliente no encontrado' });
+                }
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
             }
-            res.status(404).json({ 'mensaje': 'SeguimientoPedidos no encontrado' });
         });
     }
-    //aqui va el crud
+
     crearSoporteCliente(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            //console.log(req.body)
-            const resp = yield database_1.default.query("INSERT INTO SoporteCliente set ?", [req.body]);
-            res.json(resp);
-            //res.json(null);
+            try {
+                const resp = yield database_1.default.query("INSERT INTO SoporteCliente SET ?", [req.body]);
+                res.json(resp);
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
+            }
         });
     }
+
     actualizarSoporteCliente(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            //console.log(req.params);
-            console.log(id);
-            const resp = yield database_1.default.query("UPDATE SoporteCliente set ? WHERE SoporteCliente = ?", [req.body, id]);
-            res.json(resp);
-            //res.json(null);
+            try {
+                const resp = yield database_1.default.query("UPDATE SoporteCliente SET ? WHERE SoporteCliente = $1", [req.body, id]);
+                res.json(resp);
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
+            }
         });
     }
+
     eliminarSoporteClienteID(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
-            const resp = yield database_1.default.query(`DELETE FROM SoporteCliente WHERE SoporteCliente = ${id}`);
-            res.json(resp);
+            try {
+                const resp = yield database_1.default.query('DELETE FROM SoporteCliente WHERE SoporteCliente = $1', [id]);
+                res.json(resp);
+            } catch (error) {
+                console.error('Error al ejecutar la consulta:', error);
+                res.status(500).json({ 'mensaje': 'Error interno del servidor' });
+            }
         });
     }
 }
+
 exports.soporteclientecontroller = new SoporteClienteController();
